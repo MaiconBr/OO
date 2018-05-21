@@ -16,7 +16,7 @@ public class Principal {
 		//Instanciar JFrame
 				JFrame formulario = new JFrame();
 				formulario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				formulario.setSize(500, 300);;
+				formulario.setSize(500, 300);
 				formulario.setLocationRelativeTo(null);
 				formulario.setTitle("Utilizando JButton");
 				formulario.setLayout(null);
