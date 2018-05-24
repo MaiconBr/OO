@@ -2,6 +2,9 @@ package formularios;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.Externalizable;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,7 +19,13 @@ import controladores.Produto;
 
 public class FormularioPrincipal {
 
-	public static void main() {
+	public void inicializaFormulario(){
+		
+		//Instanciar objeto
+		Acao a = new Acao();
+		
+		// JTable
+		JTable tabela = new JTable(a.exibirDados());		
 		
 		//Instanciar JFrame
 		JFrame formulario = new JFrame();
@@ -54,7 +63,7 @@ public class FormularioPrincipal {
 		botao.setText("Cadastrar");
 		botao.setBounds(80, 80, 150, 20);	
 		
-		JScrollPane barraRolagem = new JScrollPane();
+		JScrollPane barraRolagem = new JScrollPane(tabela);
 		barraRolagem.setBounds(30, 110, 260, 100);
 
 		//Adicionar uma funçao ao botao
@@ -69,9 +78,6 @@ public class FormularioPrincipal {
 				double valor = Double.parseDouble(Valor1.getText());
 				int quantidade = Integer.parseInt(Quantidade1.getText());
 				
-				//Instanciar objeto
-				Acao a = new Acao();
-				
 				//Método de cadastro
 				a.cadastrar(produto, valor, quantidade);
 				
@@ -80,11 +86,56 @@ public class FormularioPrincipal {
 				Quantidade1.setText("");
 				Valor1.setText("");
 				
-				barraRolagem.setViewportView(a.exibirDados());
+				tabela.setModel(a.exibirDados());
 				
 			}
 		});
+		
+		tabela.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
 
+				int linha = tabela.getSelectedRow();
+				
+				// Obter os dados
+				String nomeProduto = tabela.getValueAt(linha, 0).toString();
+				double valorProduto = Double.parseDouble(tabela.getValueAt(linha, 1).toString());
+				int quantidadeProduto = Integer.parseInt(tabela.getValueAt(linha, 2).toString());
+				
+				// Criar o novo formulário
+				FormularioAlteracao fp = new FormularioAlteracao(nomeProduto, valorProduto, quantidadeProduto, linha);
+				
+				// Fechar o FormulárioPrincipal
+				formulario.dispose();
+			
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+			
 		//Adicionar elementos ao JFrame
 		formulario.add(Produto);
 		formulario.add(Quantidade);

@@ -6,9 +6,8 @@ public class Principal {
 
 	public static void main(String[] args) {
 		
-		FormularioPrincipal Fp = new FormularioPrincipal();
-		
-		Fp.main();
+		FormularioPrincipal fp = new FormularioPrincipal();
+		fp.inicializaFormulario();
 		
 		
 	}
